@@ -5,3 +5,5 @@ plotly
 pydeck
 openpyxl
 numpy
+gspread
+google-auth

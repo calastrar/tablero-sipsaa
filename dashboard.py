@@ -7,12 +7,81 @@ Ejecutar con .venv activado:
 """
 
 import os
+import uuid
+import datetime
 import duckdb
 import numpy as np
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
 import pydeck as pdk
+
+# ── Session ID anónimo (una UUID por sesión, no contiene datos personales) ────
+if "_session_id" not in st.session_state:
+    st.session_state["_session_id"] = str(uuid.uuid4())[:8]  # 8 chars, anónimo
+if "_sesion_registrada" not in st.session_state:
+    st.session_state["_sesion_registrada"] = False
+if "_feedback_enviado" not in st.session_state:
+    st.session_state["_feedback_enviado"] = False
+
+# ── Logging seguro a Google Sheets ────────────────────────────────────────────
+_SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+
+def _sanitizar(texto: str, max_len: int = 500) -> str:
+    """Elimina caracteres que activan fórmulas en Sheets y limita longitud.
+    Previene inyección de fórmulas (=, +, -, @, | al inicio) y saltos de línea."""
+    if not isinstance(texto, str):
+        texto = str(texto)
+    texto = texto.strip()
+    texto = texto.replace("\n", " ").replace("\r", " ").replace("\t", " ")
+    if texto and texto[0] in ("=", "+", "-", "@", "|", "%"):
+        texto = "'" + texto   # prefijo de apóstrofe: Google Sheets lo trata como texto literal
+    return texto[:max_len]
+
+def _get_worksheet(nombre_hoja: str):
+    """Retorna el worksheet de Google Sheets. Lanza excepción si falla."""
+    import gspread
+    from google.oauth2.service_account import Credentials
+    creds = Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"],
+        scopes=_SCOPES,
+    )
+    gc = gspread.authorize(creds)
+    sh = gc.open_by_key(st.secrets["sheets"]["spreadsheet_id"])
+    return sh.worksheet(nombre_hoja)
+
+def registrar_sesion(info: dict):
+    """Escribe una fila en la pestaña 'sesiones'. Solo una vez por sesión."""
+    if st.session_state["_sesion_registrada"]:
+        return
+    try:
+        ws = _get_worksheet("sesiones")
+        fila = [
+            datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            st.session_state["_session_id"],
+        ] + [_sanitizar(str(v), max_len=100) for v in info.values()]
+        ws.append_row(fila, value_input_option="RAW")
+        st.session_state["_sesion_registrada"] = True
+    except Exception:
+        pass  # El tablero sigue funcionando aunque el logging falle
+
+def registrar_feedback(nombre: str, mensaje: str):
+    """Escribe una fila en la pestaña 'feedback'. Solo una vez por sesión."""
+    if st.session_state["_feedback_enviado"]:
+        return False
+    try:
+        ws = _get_worksheet("feedback")
+        fila = [
+            datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            st.session_state["_session_id"],
+            _sanitizar(nombre, max_len=100),
+            _sanitizar(mensaje, max_len=500),
+        ]
+        ws.append_row(fila, value_input_option="RAW")
+        st.session_state["_feedback_enviado"] = True
+        return True
+    except Exception:
+        return False
 
 # ── Rutas ─────────────────────────────────────────────────────────────────────
 DIR         = os.path.dirname(os.path.abspath(__file__))
@@ -305,6 +374,21 @@ where_diario = f"({filtro_geo}) AND ({filtro_prod}) AND (YEAR(p.fecha) BETWEEN 2
 
 # -- WHERE anual: sin filtro de fecha para mostrar siempre todos los años --
 where_anual = f"({filtro_geo}) AND ({filtro_prod}) AND ({filtro_dest})"
+
+# ── Registrar sesión (una sola vez, anónimo, silencioso) ──────────────────────
+registrar_sesion({
+    "escala":          escala,
+    "territorio":      territorio_sel or "",
+    "depto":           ", ".join(dep_sel)      if dep_sel      else "",
+    "municipio":       ", ".join(muni_sel)     if muni_sel     else "",
+    "ciudad_destino":  ", ".join(ciudad_sel)   if ciudad_sel   else "",
+    "central":         ", ".join(central_sel)  if central_sel  else "",
+    "periodo":         ", ".join(str(a) for a in anios_sel) if anios_sel else f"{fecha_ini}→{fecha_fin}",
+    "grupo":           ", ".join(grupo_sel)    if grupo_sel    else "",
+    "subgrupo":        ", ".join(subgrupo_sel) if subgrupo_sel else "",
+    "producto":        ", ".join(producto_sel) if producto_sel else "",
+    "priori":          priori_sel,
+})
 
 # ── Etiqueta visible ──────────────────────────────────────────────────────────
 if escala == "Territorio funcional" and territorio_sel:
@@ -1414,3 +1498,42 @@ st.divider()
 #         barra.empty()
 #         st.success(f"✅ {escritas:,} filas guardadas.")
 #         st.info(f"📂 Archivo guardado en: `L:\\DATA\\SIPSAA\\CSV\\{nombre_diario}`")
+
+st.divider()
+
+# ── Módulo de feedback ────────────────────────────────────────────────────────
+st.subheader("💬 Comentarios y sugerencias")
+st.caption(
+    "¿Tienes una pregunta, necesidad de análisis o sugerencia de mejora? "
+    "Escríbela aquí — el equipo la revisará."
+)
+
+if st.session_state["_feedback_enviado"]:
+    st.success("✅ Gracias por tu comentario. Ya fue registrado.")
+else:
+    nombre_fb = st.text_input(
+        "Nombre (opcional)",
+        max_chars=100,
+        placeholder="Tu nombre o institución",
+    )
+    mensaje_fb = st.text_area(
+        "Comentario o sugerencia",
+        max_chars=500,
+        placeholder="Escribe aquí tu mensaje... (máximo 500 caracteres)",
+    )
+    chars_restantes = 500 - len(mensaje_fb)
+    st.caption(f"{chars_restantes} caracteres restantes")
+
+    if st.button("📨 Enviar comentario", type="primary", key="btn_feedback"):
+        if not mensaje_fb.strip():
+            st.warning("Por favor escribe un mensaje antes de enviar.")
+        else:
+            ok = registrar_feedback(nombre_fb, mensaje_fb)
+            if ok:
+                st.success("✅ Comentario enviado. ¡Gracias!")
+                st.rerun()
+            else:
+                st.error(
+                    "No fue posible registrar el comentario en este momento. "
+                    "Intenta más tarde o contáctanos directamente."
+                )
