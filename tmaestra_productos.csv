@@ -1,0 +1,197 @@
+﻿grupo_productos;subgrupo_producto;producto;alim_priori178
+CARNES;Carnes otras;Carnes otras;1
+CARNES;Cerdo;Carne de cerdo;1
+CARNES;Cerdo;Cerdo en pie;1
+CARNES;Pollo;Carne de pollo;1
+CARNES;Pollo;Gallina en pie;1
+CARNES;Pollo;Pollo en pie;1
+CARNES;Res;Carne de res;1
+CARNES;Res;Res en pie;1
+FRUTAS;Aguacate;Aguacate Choquette;1
+FRUTAS;Aguacate;Aguacate Hass;1
+FRUTAS;Aguacate;Aguacate común;1
+FRUTAS;Aguacate;Aguacate papelillo;1
+FRUTAS;Aguacate;Aguacates otros;1
+FRUTAS;Banano;Banano Urabá;1
+FRUTAS;Banano;Banano bocadillo;1
+FRUTAS;Banano;Banano criollo;1
+FRUTAS;Banano;Bananos otros;1
+FRUTAS;Ciruela;Ciruela importada;0
+FRUTAS;Ciruela;Ciruela nacional;0
+FRUTAS;Coco;Coco;0
+FRUTAS;Curuba;Curuba;0
+FRUTAS;Durazno;Durazno importado;0
+FRUTAS;Durazno;Durazno nacional;0
+FRUTAS;Fresa;Fresa;0
+FRUTAS;Frutas otras;Frutas importadas otras;0
+FRUTAS;Frutas otras;Frutas otras;0
+FRUTAS;Granadilla;Granadilla;0
+FRUTAS;Guanábana;Guanábana;0
+FRUTAS;Guayaba;Guayaba común;1
+FRUTAS;Guayaba;Guayaba pera;1
+FRUTAS;Guayaba;Guayabas otras;1
+FRUTAS;Gulupa;Gulupa;0
+FRUTAS;Kiwi;Kiwi;0
+FRUTAS;Limón;Limón Tahití;1
+FRUTAS;Limón;Limón común;1
+FRUTAS;Limón;Limón mandarino;1
+FRUTAS;Lulo;Lulo;1
+FRUTAS;Mandarina;Mandarina Arrayana;1
+FRUTAS;Mandarina;Mandarina Oneco;1
+FRUTAS;Mandarina;Mandarina común;1
+FRUTAS;Mandarina;Mandarinas otras;1
+FRUTAS;Mango;Mango Tommy;1
+FRUTAS;Mango;Mango Yulima;1
+FRUTAS;Mango;Mango común;1
+FRUTAS;Mango;Mango de azúcar;1
+FRUTAS;Mango;Mangos otros;1
+FRUTAS;Manzana;Manzana importada;0
+FRUTAS;Manzana;Manzana nacional;0
+FRUTAS;Maracuyá;Maracuyá;1
+FRUTAS;Melón;Melón;0
+FRUTAS;Mora;Mora;1
+FRUTAS;Naranja;Naranja Valencia;1
+FRUTAS;Naranja;Naranja Valencia y/o Sweet;1
+FRUTAS;Naranja;Naranja común;1
+FRUTAS;Naranja;Naranjas otras;1
+FRUTAS;Naranja;Tangelo;0
+FRUTAS;Papaya;Papaya Maradol;1
+FRUTAS;Papaya;Papaya Paulina;1
+FRUTAS;Papaya;Papaya hawaiana;1
+FRUTAS;Papaya;Papaya tainung;1
+FRUTAS;Papaya;Papayas otras;1
+FRUTAS;Patilla;Patilla;0
+FRUTAS;Patilla;Patilla baby;0
+FRUTAS;Pera;Pera importada;0
+FRUTAS;Pera;Pera nacional;0
+FRUTAS;Pitahaya;Pitahaya;0
+FRUTAS;Piña;Piña gold;1
+FRUTAS;Piña;Piña perolera;1
+FRUTAS;Piña;Piñas otras;1
+FRUTAS;Tomate de árbol;Tomate de árbol;1
+FRUTAS;Uchuva;Uchuva;0
+FRUTAS;Uva;Uva Isabela;0
+FRUTAS;Uva;Uva importada;0
+FRUTAS;Uva;Uva nacional;0
+FRUTAS;Zapote;Zapote;0
+GRANOS Y CEREALES;Arroz;Arroz;1
+GRANOS Y CEREALES;Arveja seca;Arveja seca importada;1
+GRANOS Y CEREALES;Cereales;Cereales otros;0
+GRANOS Y CEREALES;Fríjol;Fríjol;1
+GRANOS Y CEREALES;Garbanzo;Garbanzo;0
+GRANOS Y CEREALES;Granos secos;Granos Secos;0
+GRANOS Y CEREALES;Lenteja;Lenteja;0
+GRANOS Y CEREALES;Maíz;Maíz Amarillo;0
+GRANOS Y CEREALES;Maíz;Maíz Blanco;0
+LACTEOS Y HUEVOS;Huevo;Huevo;1
+LACTEOS Y HUEVOS;Huevo;Huevos otros;1
+LACTEOS Y HUEVOS;Leche fresca;Leche cruda;1
+LACTEOS Y HUEVOS;Leche procesada;Bebidas lácteas;1
+LACTEOS Y HUEVOS;Leche procesada;Leche en polvo;0
+LACTEOS Y HUEVOS;Leche procesada;Leche pasteurizada UHT;1
+LACTEOS Y HUEVOS;Leche procesada;Lácteos otros;1
+LACTEOS Y HUEVOS;Queso;Queso costeño;1
+LACTEOS Y HUEVOS;Queso;Quesos y cuajadas;1
+PESCADOS;Bagre;Bagre;0
+PESCADOS;Basa;Basa;1
+PESCADOS;Bocachico;Bocachico;1
+PESCADOS;Cachama;Cachama;1
+PESCADOS;Camarón;Camarón;0
+PESCADOS;Mariscos;Mariscos otros;0
+PESCADOS;Mojarra;Mojarra;1
+PESCADOS;Nicuro;Nicuro;1
+PESCADOS;Pescado seco;Pescado seco;1
+PESCADOS;Pescados de mar;Pescados de mar;1
+PESCADOS;Pescados de río;Pescados de río;1
+PESCADOS;Tilapia;Tilapia;1
+PESCADOS;Trucha;Trucha;1
+PROCESADOS;Aceites y grasas;Aceites;0
+PROCESADOS;Aceites y grasas;Grasas;0
+PROCESADOS;Avena;Avena;0
+PROCESADOS;Azúcar;Azúcar;0
+PROCESADOS;Bebidas;Agua envasada;0
+PROCESADOS;Bebidas;Bebidas alcohólicas;0
+PROCESADOS;Bebidas;Bebidas otras;0
+PROCESADOS;Bebidas;Cervezas;0
+PROCESADOS;Bebidas;Gaseosas y maltas;0
+PROCESADOS;Bebidas;Jugo de frutas;0
+PROCESADOS;Café;Café;0
+PROCESADOS;Cereales;Cereales para desayuno;0
+PROCESADOS;Chocolate;Chocolate;0
+PROCESADOS;Condimentos;Condimentos;0
+PROCESADOS;Condimentos;Sal yodada;0
+PROCESADOS;Condimentos;Salsas y aderezos;0
+PROCESADOS;Confitería y snacks;Confitería;0
+PROCESADOS;Confitería y snacks;Pasabocas;0
+PROCESADOS;Embutidos;Carnes frias y embutidos;0
+PROCESADOS;Enlatados;Atún en lata;0
+PROCESADOS;Enlatados;Conservas y enlatados;0
+PROCESADOS;Enlatados;Sardinas en lata;0
+PROCESADOS;Harinas;Harinas;0
+PROCESADOS;Panadería;Galletas;0
+PROCESADOS;Panadería;Productos de panaderia;0
+PROCESADOS;Panela;Panela;1
+PROCESADOS;Pastas;Pastas alimenticias;0
+PROCESADOS;Procesados otros;Procesados otros;0
+PROCESADOS;Sopas;Cremas y sopas;0
+TUBERCULOS, RAICES Y PLATANOS;Arracacha;Arracacha;1
+TUBERCULOS, RAICES Y PLATANOS;Jengibre;Jengibre;0
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa Betina;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa Morasurco;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa R-12;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa capira;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa criolla;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa nevada;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa parda pastusa;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa rubí;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa sabanera;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa superior;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa suprema;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papa única;1
+TUBERCULOS, RAICES Y PLATANOS;Papa;Papas negras otras;1
+TUBERCULOS, RAICES Y PLATANOS;Plátano;Plátano guineo;1
+TUBERCULOS, RAICES Y PLATANOS;Plátano;Plátano hartón verde;1
+TUBERCULOS, RAICES Y PLATANOS;Plátano;Plátanos otros;1
+TUBERCULOS, RAICES Y PLATANOS;Tubérculos otros;Tubérculos otros;1
+TUBERCULOS, RAICES Y PLATANOS;Ulluco;Ulluco;1
+TUBERCULOS, RAICES Y PLATANOS;Yuca;Yuca;1
+TUBERCULOS, RAICES Y PLATANOS;Ñame;Ñame;0
+VERDURAS Y HORTALIZAS;Acelga;Acelga;0
+VERDURAS Y HORTALIZAS;Ahuyama;Ahuyama;1
+VERDURAS Y HORTALIZAS;Ajo;Ajo;0
+VERDURAS Y HORTALIZAS;Ají;Ají topito dulce;0
+VERDURAS Y HORTALIZAS;Apio;Apio;0
+VERDURAS Y HORTALIZAS;Aromáticas;Cilantro;0
+VERDURAS Y HORTALIZAS;Aromáticas;Hierbas aromáticas y medicinales;0
+VERDURAS Y HORTALIZAS;Aromáticas;Perejil;0
+VERDURAS Y HORTALIZAS;Arveja verde;Arveja verde en vaina;1
+VERDURAS Y HORTALIZAS;Berenjena;Berenjena;0
+VERDURAS Y HORTALIZAS;Brócoli;Brócoli;0
+VERDURAS Y HORTALIZAS;Calabaza;Calabacín;1
+VERDURAS Y HORTALIZAS;Calabaza;Calabaza;1
+VERDURAS Y HORTALIZAS;Cebolla cabezona;Cebolla Cabezona;1
+VERDURAS Y HORTALIZAS;Cebolla cabezona;Cebolla cabezona blanca;1
+VERDURAS Y HORTALIZAS;Cebolla cabezona;Cebolla cabezona roja;1
+VERDURAS Y HORTALIZAS;Cebolla junca;Cebolla junca;1
+VERDURAS Y HORTALIZAS;Cebolla puerro;Cebolla puerro;0
+VERDURAS Y HORTALIZAS;Chócolo;Chócolo mazorca;0
+VERDURAS Y HORTALIZAS;Cidra;Cidra;0
+VERDURAS Y HORTALIZAS;Coliflor;Coliflor;0
+VERDURAS Y HORTALIZAS;Espinaca;Espinaca;0
+VERDURAS Y HORTALIZAS;Fríjol verde;Fríjol verde;1
+VERDURAS Y HORTALIZAS;Habichuela;Habichuela;1
+VERDURAS Y HORTALIZAS;Hortalizas de hoja;Hortalizas de hoja;0
+VERDURAS Y HORTALIZAS;Lechuga;Lechuga Batavia;1
+VERDURAS Y HORTALIZAS;Lechuga;Lechuga crespa;1
+VERDURAS Y HORTALIZAS;Lechuga;Lechugas otras;1
+VERDURAS Y HORTALIZAS;Pepino;Pepino cohombro;0
+VERDURAS Y HORTALIZAS;Pepino;Pepino de rellenar;0
+VERDURAS Y HORTALIZAS;Pimentón;Pimentón;0
+VERDURAS Y HORTALIZAS;Remolacha;Remolacha;0
+VERDURAS Y HORTALIZAS;Repollo;Repollo;0
+VERDURAS Y HORTALIZAS;Tomate;Tomate Riogrande;1
+VERDURAS Y HORTALIZAS;Tomate;Tomate chonto;1
+VERDURAS Y HORTALIZAS;Tomate;Tomate larga vida;1
+VERDURAS Y HORTALIZAS;Tomate;Tomates otros;1
+VERDURAS Y HORTALIZAS;Verduras otras;Verduras y hortalizas otras;0
+VERDURAS Y HORTALIZAS;Zanahoria;Zanahoria;1

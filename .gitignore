@@ -1,0 +1,10 @@
+# Exports generados por el dashboard
+SIPSAA_Total_*.csv
+
+# Python
+__pycache__/
+*.pyc
+
+# Sistema
+.DS_Store
+Thumbs.db
