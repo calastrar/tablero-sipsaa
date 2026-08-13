@@ -237,7 +237,8 @@ with st.sidebar:
 
     anios_sel = st.multiselect(
         "Año(s)",
-        options=list(range(2018, 2027)),
+        options=list(range(2026, 2017, -1)),
+        default=[2025],
         placeholder="Todos los años (o elige uno/varios)",
     )
 
@@ -474,7 +475,8 @@ def cargar_resumen(where: str):
             MIN(p.fecha)::VARCHAR               AS fecha_inicio,
             MAX(p.fecha)::VARCHAR               AS fecha_fin,
             COUNT(DISTINCT p.producto)          AS n_productos,
-            COUNT(DISTINCT p.muni_origen)       AS n_origenes
+            COUNT(DISTINCT p.muni_origen)       AS n_origenes,
+            COUNT(DISTINCT p.central_may)       AS n_centrales
         FROM '{PARQUET}' p
         WHERE {where}
     """).df()
@@ -499,6 +501,28 @@ def cargar_por_mes(where: str):
     return df
 
 @st.cache_data
+def cargar_serie(where: str, granularidad: str):
+    trunc = {
+        "Mensual": "DATE_TRUNC('month', p.fecha)::DATE",
+        "Semanal": "DATE_TRUNC('week',  p.fecha)::DATE",
+        "Diaria":  "p.fecha::DATE",
+    }[granularidad]
+    con = duckdb.connect()
+    df = con.execute(f"""
+        SELECT
+            {trunc}                                 AS periodo,
+            COUNT(*)                                AS registros,
+            ROUND(SUM(p.cantidad_kg) / 1000, 0)    AS toneladas
+        FROM '{PARQUET}' p
+        WHERE {where}
+        GROUP BY periodo
+        ORDER BY periodo
+    """).df()
+    con.close()
+    df["periodo"] = pd.to_datetime(df["periodo"])
+    return df
+
+@st.cache_data
 def cargar_por_anio(where: str):
     con = duckdb.connect()
     df = con.execute(f"""
@@ -519,11 +543,12 @@ resumen = cargar_resumen(where_sql)
 
 st.subheader(f"📊 {titulo_escala}")
 
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4, col5 = st.columns(5)
 col1.metric("Total registros",          f"{resumen['total_registros'][0]:,.0f}")
 col2.metric("Toneladas totales",        f"{resumen['toneladas'][0]:,.0f}")
 col3.metric("Productos",                resumen['n_productos'][0])
 col4.metric("Municipios/países origen", resumen['n_origenes'][0])
+col5.metric("Centrales mayoristas",     resumen['n_centrales'][0])
 
 st.markdown(linea_filtros)
 st.caption(f"Datos disponibles: {resumen['fecha_inicio'][0]} → {resumen['fecha_fin'][0]}")
@@ -601,38 +626,57 @@ with col_grafico:
 
 st.divider()
 
-# ── Gráfica mensual doble eje ─────────────────────────────────────────────────
-st.subheader("📈 Serie mensual — Toneladas y Registros")
+# ── Serie temporal doble eje ──────────────────────────────────────────────────
+st.subheader("📈 Serie temporal — Toneladas y Registros")
 st.markdown(linea_filtros)
 
-df_mes = cargar_por_mes(where_sql)
+gran_sel = st.radio(
+    "Granularidad",
+    options=["Mensual", "Semanal", "Diaria"],
+    index=0,
+    horizontal=True,
+)
+
+if gran_sel == "Diaria":
+    fecha_inicio_dt = pd.to_datetime(resumen["fecha_inicio"][0])
+    fecha_fin_dt    = pd.to_datetime(resumen["fecha_fin"][0])
+    if (fecha_fin_dt - fecha_inicio_dt).days > 730:
+        st.warning(
+            "Vista diaria con más de 2 años de datos — usa el range slider "
+            "para navegar por períodos específicos."
+        )
+
+df_serie = cargar_serie(where_sql, gran_sel)
+
+fmt_hover  = "%d %b %Y" if gran_sel in ("Semanal", "Diaria") else "%b %Y"
+fmt_tick   = "%b %Y"    if gran_sel == "Mensual"             else "%d %b %Y"
 
 fig = go.Figure()
 
 fig.add_trace(go.Bar(
-    x=df_mes["mes"],
-    y=df_mes["toneladas"],
+    x=df_serie["periodo"],
+    y=df_serie["toneladas"],
     name="Toneladas",
     marker_color="#4C9BE8",
     yaxis="y1",
-    hovertemplate="%{x|%b %Y}<br>Toneladas: %{y:,.0f}<extra></extra>",
+    hovertemplate=f"%{{x|{fmt_hover}}}<br>Toneladas: %{{y:,.0f}}<extra></extra>",
 ))
 
 fig.add_trace(go.Scatter(
-    x=df_mes["mes"],
-    y=df_mes["registros"],
+    x=df_serie["periodo"],
+    y=df_serie["registros"],
     name="Registros",
     mode="lines",
     line=dict(color="#F4A261", width=2),
     yaxis="y2",
-    hovertemplate="%{x|%b %Y}<br>Registros: %{y:,.0f}<extra></extra>",
+    hovertemplate=f"%{{x|{fmt_hover}}}<br>Registros: %{{y:,.0f}}<extra></extra>",
 ))
 
 fig.update_layout(
     xaxis=dict(
         rangeslider=dict(visible=True),
         type="date",
-        tickformat="%b %Y",
+        tickformat=fmt_tick,
     ),
     yaxis=dict(
         title=dict(text="Toneladas", font=dict(color="#4C9BE8")),
@@ -792,10 +836,8 @@ elif _MAPA_VISIBLE:
         _coord_cent_col["color"] = _coord_cent_col["central_may"].apply(
             lambda c: color_map.get(c, [200, 200, 200, 200])
         )
-        _coord_cent_col["_popup"] = (
-            "<b>" + _coord_cent_col["central_may"] + "</b><br/>"
-            + _coord_cent_col["ciudad_destino"]
-        )
+        _coord_cent_col["_lat"] = _coord_cent_col["lat"].round(5).astype(str)
+        _coord_cent_col["_lon"] = _coord_cent_col["lon"].round(5).astype(str)
 
         # ── Capas ─────────────────────────────────────────────────────────────
         layer_arcos = pdk.Layer(
@@ -838,7 +880,7 @@ elif _MAPA_VISIBLE:
             initial_view_state=view,
             map_style="https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
             tooltip={
-                "html": "{_popup}",
+                "html": "<b>{central_may}</b><br/>{ciudad_destino}<br/><span style='color:#aaa;font-size:11px'>Lat {_lat} · Lon {_lon}</span>",
                 "style": {
                     "backgroundColor": "rgba(20,20,20,0.88)",
                     "color": "white",
