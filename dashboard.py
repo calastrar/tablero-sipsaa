@@ -85,7 +85,7 @@ def registrar_feedback(nombre: str, mensaje: str):
 
 # ── Rutas ─────────────────────────────────────────────────────────────────────
 DIR         = os.path.dirname(os.path.abspath(__file__))
-PARQUET     = os.path.join(DIR, "SIPSAA_TOTAL_V9.parquet")
+PARQUET     = os.path.join(DIR, "SIPSAA_TOTAL_V10.parquet")
 TERRITORIOS       = os.path.join(DIR, "tmaestra_territorios.csv")
 PRODUCTOS         = os.path.join(DIR, "tmaestra_productos.csv")
 CENTRALES         = os.path.join(DIR, "tabla_centrales.csv")
@@ -1195,12 +1195,12 @@ def construir_metadatos(df_export, n_filas):
          "DANE Colombia — Sistema de Información de Precios y Abastecimiento del "
          "Sector Agropecuario (SIPSA), componente Abastecimiento de Alimentos (SIPSA_A)"),
         ("URL fuente",            "https://microdatos.dane.gov.co/index.php/catalog/697"),
-        ("Versión del dataset",   "SIPSAA_TOTAL_V9.parquet"),
-        ("Período total en V9",   "2018-01-02 → 2026-05-31"),
-        ("Total registros en V9", "16,261,743"),
+        ("Versión del dataset",   "SIPSAA_TOTAL_V10.parquet"),
+        ("Período total en V10",  "2018-01-02 → 2026-05-31"),
+        ("Total registros en V10","16,261,743"),
         ("Fecha de exportación",  datetime.datetime.now().strftime("%Y-%m-%d %H:%M")),
         ("Nota",
-         "Este archivo es un subconjunto filtrado del dataset SIPSAA_TOTAL_V9. "
+         "Este archivo es un subconjunto filtrado del dataset SIPSAA_TOTAL_V10. "
          "Los datos representan ingresos de carga agropecuaria a centrales mayoristas "
          "de Colombia, agregados por mes. Cada fila corresponde a una combinación "
          "única de período, origen, destino y producto."),
